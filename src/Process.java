@@ -3,12 +3,12 @@ import java.util.Random;
 public class Process {
     public String Name;
     public int Time;
-    public boolean IO;
+    public int TimeLeft;
 
     public Process(int num){
-        Name = "Process №" + num;
+        Name = "Процесс№" + num;
         Random rnd = new Random();
-        Time = rnd.nextInt(5, 14) * 10;
-        IO = rnd.nextBoolean();
+        Time = rnd.nextInt(5, 14);
+        TimeLeft = Time;
     }
 }
