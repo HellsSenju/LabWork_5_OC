@@ -8,6 +8,8 @@ public class Execution {
     private int Time = 6; //максимальное время для одного процесса
 
     public Execution(){
+
+
         queue = new LinkedList<>();
         queue.addLast(new Thread(1, true));
         queue.addLast(new Thread(2, false));
