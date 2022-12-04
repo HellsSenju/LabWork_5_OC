@@ -8,8 +8,6 @@ public class Execution {
     private int Time = 6; //максимальное время для одного процесса
 
     public Execution(){
-
-
         queue = new LinkedList<>();
         queue.addLast(new Thread(1, true));
         queue.addLast(new Thread(2, false));
@@ -35,28 +33,24 @@ public class Execution {
                 if(i == saved.getFirst().IOTime){
 
                 }
-                if(current.TimeLeft == 0){
+
+                if(current.TimeLeft == 0) //выполняется раньше выделенного премени
+                {
+                    System.out.print("завершен");
                     break;
                 }
                 if(current.IO && current.Time - current.TimeLeft == current.IOStart){
                     System.out.print("IO ");
-                    flag = true;
                     current.IO = false;
+                    saved.addLast(current);
                     break;
                 }
 
+                if(i == Time - 1){
+                    queue.addLast(current);
+                }
                 System.out.print("... ");
                 current.TimeLeft--;
-            }
-            if(current.TimeLeft == 0){
-                System.out.print("завершен");
-            }
-            else if(current.Time - current.TimeLeft == current.IOStart){
-                saved.addLast(current);
-            }
-            else{
-                queue.addLast(current);
-                System.out.print("завершен");
             }
         }
     }
