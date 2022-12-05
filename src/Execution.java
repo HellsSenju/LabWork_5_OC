@@ -19,27 +19,27 @@ public class Execution {
 
     public void Interruption() // с прерыванием
     {
-        int IOTime = rnd.nextInt(2,7);
-        System.out.println(IOTime);
         Thread current;
         boolean flag = false;
 
         while(!queue.isEmpty()){
             current = queue.getFirst();
             queue.removeFirst();
+            System.out.print(current.Name + "[" + current.WorkTime + "] : ");
 
-            System.out.print(current.Name + "[" + current.TimeLeft + "] : ");
             for(int i = 0; i < Time; i++){
-                if(i == saved.getFirst().IOTime){
+                if(!saved.isEmpty())
+                    if(i == saved.getFirst().IOTime){
+                        System.out.print("Прерывание");
+                        saved.addLast(current);
+                    }
 
-                }
-
-                if(current.TimeLeft == 0) //выполняется раньше выделенного премени
+                if(current.WorkTime == current.Time) //выполняется раньше выделенного премени
                 {
                     System.out.print("завершен");
                     break;
                 }
-                if(current.IO && current.Time - current.TimeLeft == current.IOStart){
+                if(current.IO && current.Time - current.WorkTime == current.IOStart){
                     System.out.print("IO ");
                     current.IO = false;
                     saved.addLast(current);
@@ -50,7 +50,7 @@ public class Execution {
                     queue.addLast(current);
                 }
                 System.out.print("... ");
-                current.TimeLeft--;
+                current.WorkTime++;
             }
         }
     }
