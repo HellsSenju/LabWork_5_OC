@@ -8,37 +8,34 @@ public class Thread {
     public int IOStop;
     public int IOTime;
 
-    public Thread(int num, boolean io){
+    public Thread(int num, int Time, int IOStart, int IOTime){
         Name = "Поток№" + num;
-        Random rnd = new Random();
-        Time = rnd.nextInt(10, 18);
+        this.Time = Time;
         WorkTime = 0;
-        boolean IO = io;
-        if(IO){
-            IOStart = rnd.nextInt(4, Time / 2);
-            IOTime = rnd.nextInt(2, 6);
-            IOStop = IOStart + IOTime;
-        }
+        this.IOStart = IOStart;
+        this.IOTime = IOTime;
+        IOStop = IOStart + IOTime;
     }
 
-    public void Interruption(int timer){
+    public int Interruption(int timer){
+        //1 - завершен
+        //0 - IO, прерывание
+        //-1 - не завершен
+
         System.out.print(Name + "[" + WorkTime + "] : ");
 
         for(int i = 1; i <= timer; i++){
             if(WorkTime == timer){
                 System.out.print("завершен");
-                break;
+                return 1;
             }
             if(WorkTime == IOStart){
                 System.out.print("IO => прерывание");
-                InputOutput();
+                return 0;
             }
             System.out.print("... ");
             WorkTime++;
         }
-    }
-
-    private void InputOutput(){
-
+        return -1;
     }
 }
