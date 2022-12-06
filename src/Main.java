@@ -3,5 +3,6 @@ public class Main {
 
         Execution exe = new Execution();
         exe.Interruption();
+        exe.NonInterruption();
     }
 }

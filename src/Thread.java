@@ -6,6 +6,7 @@ public class Thread {
     public int IOStart;
     public int IOStop;
     public int IOTime;
+    public int Res;
     public boolean IOEnd = true;
 
     public Thread(int num, int Time, int IOStart, int IOTime){
@@ -24,6 +25,7 @@ public class Thread {
         //-1 - не завершен
 
         System.out.print(Name + "[" + (Time - WorkTime) + "] : ");
+        Res  = 0;
 
         for(int i = 1; i <= timer; i++){
             if(WorkTime == Time){
@@ -32,7 +34,8 @@ public class Thread {
                 return 1;
             }
             if(WorkTime == IOStart & !IOEnd){
-                System.out.print("IO");
+                System.out.print("IO(" + IOTime + ") ");
+                Res += IOTime;
                 System.out.println();
                 Ost = timer - WorkTime;
                 IOEnd = true;
@@ -40,8 +43,33 @@ public class Thread {
             }
             System.out.print("... ");
             WorkTime++;
+            Res++;
         }
         System.out.println();
         return -1;
+    }
+
+    public void WithoutInter(int timer){
+        System.out.print(Name + "[" + (Time - WorkTime) + "] : ");
+        Res = 0;
+
+        for(int i = 1; i <= timer; i++){
+            if(WorkTime == Time){
+                System.out.print("завершен");
+                break;
+            }
+            if(WorkTime == IOStart){
+                Res += IOTime;
+                System.out.print("IO(" + IOTime + ") ");
+                /*while(kol != IOStop){
+                    kol++;
+                }*/
+            }
+
+            System.out.print("... ");
+            WorkTime++;
+            Res++;
+        }
+        System.out.println();
     }
 }

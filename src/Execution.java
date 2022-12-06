@@ -40,7 +40,7 @@ public class Execution {
             current = queueF.getFirst();
             queueF.removeFirst();
             res = current.Do(Time);
-            allTime += Time;
+            allTime += current.Res;
             if(res == 0){
                 saved = current;
                 int need = saved.IOTime;
@@ -51,11 +51,11 @@ public class Execution {
                 while(kol > 0){
                     if(need <= Time){
                         current.Do(need);
-                        allTime += need;
+                        allTime += current.Res;
                     }
                     else{
                         current.Do(Time);
-                        allTime += Time;
+                        allTime += current.Res;
                     }
                     kol--;
                     need -= Time;
@@ -65,7 +65,7 @@ public class Execution {
 
                 if(saved.Ost != 0){
                     saved.Do(saved.Ost);
-                    allTime += saved.Ost;
+                    allTime += saved.Res;
                     saved.Ost = 0;
                     if(saved.WorkTime < saved.Time) queueF.addLast(saved);
                 }
@@ -79,6 +79,19 @@ public class Execution {
 
     public void NonInterruption() // без прерывания
     {
+        System.out.println("=============================================");
+        System.out.println("Программный ввод вывод");
+        Thread current;
 
+        int allTime = 0;
+
+        while(!queueS.isEmpty()){
+            current = queueS.getFirst();
+            queueS.removeFirst();
+            current.WithoutInter(Time);
+            allTime += current.Res;
+            if(current.WorkTime < current.Time) queueS.addLast(current);
+        }
+        System.out.println("Все время работы: " + allTime);
     }
 }
